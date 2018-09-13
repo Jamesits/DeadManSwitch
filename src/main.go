@@ -36,7 +36,7 @@ func main() {
 
 	globalMutex, err := filemutex.New(filename)
 	if err != nil {
-		log.Println("Directory did not exist or file could not created")
+		log.Fatalf("Could not create lock file %s\n", filename)
 	}
 
 	log.Println("Trying to acquire global lock...")
