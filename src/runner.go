@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"sort"
 	"strings"
 	"time"
 )
@@ -83,8 +84,13 @@ func runScriptIterative(path string) {
 			f, _ := os.Open(path)
 			files, _ := f.Readdir(-1)
 			f.Close()
-			for _, fi := range files {
-				runScriptIterative(filepath.Join(path, fi.Name()))
+			filenames := make([]string, len(files))
+			for i, v := range files {
+				filenames[i] = v.Name()
+			}
+			sort.Strings(filenames)
+			for _, fi := range filenames {
+				runScriptIterative(filepath.Join(path, fi))
 			}
 		} else {
 			// is a single file
