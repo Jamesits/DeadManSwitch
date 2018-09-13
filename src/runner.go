@@ -82,10 +82,12 @@ func delFileIterative(path string) {
 	// first we try a remove all method
 	err := os.RemoveAll(path)
 	// if unable to clean up, we remove as much as we can
-	if err != nil {
+	if err == nil  {
+		log.Printf("%s removed on first try\n", path)
+	} else {
 		file, err := os.Stat(path)
 		if os.IsNotExist(err) {
-			log.Printf("File %s not found or insufficient privilege, skipping...\n", path)
+			log.Printf("%s not found or insufficient privilege, skipping...\n", path)
 		} else {
 			if file.IsDir() {
 				log.Printf("Entering directory %s\n", path)

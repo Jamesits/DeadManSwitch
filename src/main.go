@@ -17,7 +17,7 @@ func main() {
 
 	conf, err := loadConfig(*confPath)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 	}
 
 	log.Printf("Dead Man's Switch starting...")
@@ -29,7 +29,7 @@ func main() {
 
 	globalMutex, err := filemutex.New(filename)
 	if err != nil {
-		log.Fatalln("Directory did not exist or file could not created")
+		log.Println("Directory did not exist or file could not created")
 	}
 
 	log.Println("Trying to acquire global lock...")
