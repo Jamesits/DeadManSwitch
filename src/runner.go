@@ -99,7 +99,7 @@ func runScriptIterative(path string) {
 			if err != nil {
 				log.Print(err)
 			} else {
-				log.Print(out)
+				log.Print(string(out))
 			}
 		}
 	}
