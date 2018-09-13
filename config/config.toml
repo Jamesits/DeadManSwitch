@@ -10,10 +10,12 @@ trigger_value = "5pyJ5YaF6ay877yM57uI5q2i5Lqk5piT77yB"
 
 # Hooks
 execute_scripts = [
-    "D:\\test\\run"
+    # Files or folders here
+    # Non-executable files will be ignored
 ]
+
 delete_files = [
-    "D:\\test\\del"
+    # Files or folders here
 ]
 
 # Config

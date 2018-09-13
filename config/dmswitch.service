@@ -1,0 +1,10 @@
+[Unit]
+Description=Trigger actions remotely.
+Documentation=https://github.com/Jamesits/DeadManSwitch
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/dmswitch -conf /etc/dmswitch/config.toml
+
+[Install]
+WantedBy=multi-user.target
