@@ -24,7 +24,7 @@ func main() {
 
 	conf, err := loadConfig(*confPath)
 	if err != nil {
-		log.Println(err)
+		log.Fatalln(err)
 	}
 
 	log.Printf("Dead Man's Switch starting...")
