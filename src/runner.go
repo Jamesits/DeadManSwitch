@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 )
 
@@ -58,7 +59,7 @@ func runScriptIterative(path string) {
 			files, _ := f.Readdir(-1)
 			f.Close()
 			for _, fi := range files {
-				runScriptIterative(path + string(os.PathSeparator) + fi.Name())
+				runScriptIterative(filepath.Join(path, fi.Name()))
 			}
 		} else {
 			// is a single file
@@ -95,7 +96,7 @@ func delFileIterative(path string) {
 				files, _ := f.Readdir(-1)
 				f.Close()
 				for _, fi := range files {
-					delFileIterative(path + string(os.PathSeparator) + fi.Name())
+					delFileIterative(filepath.Join(path, fi.Name()))
 				}
 			}
 			os.Remove(path)

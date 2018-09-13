@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"path/filepath"
 	"runtime"
 	"time"
 )
@@ -24,7 +25,7 @@ func main() {
 
 	filename := "/var/run/dmswitch.lock"
 	if runtime.GOOS == "windows" {
-		filename = os.TempDir() + string(os.PathSeparator) + "dmswitch.lock"
+		filename = filepath.Join(os.TempDir(), "dmswitch.lock")
 	}
 
 	globalMutex, err := filemutex.New(filename)
