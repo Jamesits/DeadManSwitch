@@ -21,5 +21,6 @@ popd
 pushd config
 mkdir -p /etc/dmswitch
 cp config.toml /etc/dmswitch
+cp -r hooks /etc/dmswitch
 cp dmswitch.service /etc/systemd/system
 popd
