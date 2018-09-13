@@ -1,0 +1,27 @@
+# The DNS record to check
+record = "test.ds.jamesits.eu.org"
+record_type = "TXT"
+
+# A "normal" value
+expected_value = "cHnkuqTmmJM="
+
+# A "execute immediately" value
+trigger_value = "5pyJ5YaF6ay877yM57uI5q2i5Lqk5piT77yB"
+
+# Hooks
+execute_scripts = [
+    "D:\\test\\run"
+]
+delete_files = [
+    "D:\\test\\del"
+]
+
+# Config
+# seconds between every check
+check_interval = 60
+
+# quit main program after one successful trigger
+exit_after_trigger = true
+
+trigger_on_uncertain = true
+max_uncertain_tolerance = 3
