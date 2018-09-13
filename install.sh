@@ -6,11 +6,16 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
+export GOPATH=/tmp/go
+export GOBIN=$GOPATH/bin
+
 pushd src
+make deps
 make
 chmod +x dmswitch
 mkdir -p /usr/local/bin
 mv dmswitch /usr/local/bin
+rm -rf /tmp/go
 popd
 
 pushd config
