@@ -59,7 +59,7 @@ func main() {
 		case Uncertain:
 			uncertainCount++
 			log.Printf("Uncertain count %d/%d", uncertainCount, conf.MaxUncertainTolerance)
-			if uncertainCount > conf.MaxUncertainTolerance {
+			if conf.TriggerOnUncertain && uncertainCount > conf.MaxUncertainTolerance {
 				execute(conf)
 			}
 		}
