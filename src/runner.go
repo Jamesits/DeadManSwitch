@@ -11,7 +11,7 @@ import (
 
 func check(conf *config) uint8{
 	req := new(dns.Msg)
-	req.SetQuestion(dns.Fqdn(conf.Record), stringToDnsType(conf.RecordType))
+	req.SetQuestion(dns.Fqdn(conf.Record), dns.StringToType[conf.RecordType])
 
 	client := new(dns.Client)
 	client.SingleInflight = true
