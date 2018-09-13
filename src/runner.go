@@ -63,17 +63,12 @@ func runScriptIterative(path string) {
 			}
 		} else {
 			// is a single file
-			if file.Mode() & 0111 != 0 {
-				// executable
-				log.Printf("Executing %s:\n", path)
-				out, err := exec.Command(path).Output()
-				if err != nil {
-					log.Print(err)
-				} else {
-					log.Print(out)
-				}
+			log.Printf("Executing %s:\n", path)
+			out, err := exec.Command(path).Output()
+			if err != nil {
+				log.Print(err)
 			} else {
-				log.Printf("File %s is not executable, skipping...", path)
+				log.Print(out)
 			}
 		}
 	}
