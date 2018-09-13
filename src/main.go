@@ -16,6 +16,12 @@ func main() {
 	confPath := flag.String("conf", "config.toml", "Configuration file")
 	flag.Parse()
 
+	// cd to config directory
+	err := os.Chdir(filepath.Dir(*confPath))
+	if err != nil {
+		log.Panic(err)
+	}
+
 	conf, err := loadConfig(*confPath)
 	if err != nil {
 		log.Println(err)
