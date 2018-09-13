@@ -16,7 +16,7 @@ func check(conf *config) uint8{
 	client := new(dns.Client)
 	client.SingleInflight = true
 	in, rtt, err := client.Exchange(req, "1.2.4.8:53")
-	log.Printf("RTT: %d\n", rtt)
+	log.Printf("RTT: %s\n", rtt)
 
 	// unexpected result
 	if err != nil {
