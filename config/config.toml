@@ -1,3 +1,9 @@
+# DNS resolver
+try_system_resolver = true
+custom_resolvers = [
+    "8.8.8.8:53",
+]
+
 # The DNS record to check
 record = "test.ds.jamesits.eu.org"
 record_type = "TXT"

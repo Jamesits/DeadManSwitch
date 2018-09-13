@@ -7,6 +7,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 func check(conf *config) uint8{
@@ -15,12 +16,36 @@ func check(conf *config) uint8{
 
 	client := new(dns.Client)
 	client.SingleInflight = true
-	in, rtt, err := client.Exchange(req, "1.2.4.8:53")
-	log.Printf("RTT: %s\n", rtt)
+	resolvers := conf.CustomResolvers
+	if conf.TrySystemResolver {
+		_, err := os.Stat("/etc/resolv.conf")
+		if os.IsExist(err) {
+			cfg, err := dns.ClientConfigFromFile("/etc/resolv.conf")
+			if err != nil {
+				for _, elem := range cfg.Servers {
+					resolvers = append(resolvers, elem)
+				}
+			}
+		}
+	}
 
-	// unexpected result
-	if err != nil {
-		log.Println("Unable to resolve record")
+	var in *dns.Msg
+	var rtt time.Duration
+	var err error
+	gotResult := false
+	for _, server := range resolvers {
+		in, rtt, err = client.Exchange(req, server)
+		log.Printf("Server: %s RTT: %s\n", server, rtt)
+
+		// unexpected result
+		if err != nil {
+			log.Printf("Unable to resolve record using %s\n", server)
+		} else {
+			gotResult = true
+			break
+		}
+	}
+	if !gotResult {
 		return Uncertain
 	}
 

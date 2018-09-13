@@ -7,6 +7,8 @@ import (
 )
 
 type config struct {
+	TrySystemResolver		bool		`toml:"try_system_resolver"`
+	CustomResolvers			[]string		`toml:"custom_resolvers"`
 	Record					string		`toml:"record"`
 	RecordType				string		`toml:"record_type"`
 	ExpectedValue			string		`toml:"expected_value"`
