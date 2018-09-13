@@ -1,4 +1,5 @@
 #!/bin/bash
+set -eu
 
 if [[ $EUID -ne 0 ]]; then
    echo "This script must be run as root"
@@ -16,4 +17,4 @@ pushd config
 mkdir -p /etc/dmswitch
 cp config.toml /etc/dmswitch
 cp dmswitch.service /etc/systemd/system
-popd config
+popd
