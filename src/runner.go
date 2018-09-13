@@ -96,10 +96,9 @@ func runScriptIterative(path string) {
 			// is a single file
 			log.Printf("Executing %s:\n", path)
 			out, err := exec.Command(path).Output()
+			log.Print(string(out))
 			if err != nil {
 				log.Print(err)
-			} else {
-				log.Print(string(out))
 			}
 		}
 	}
