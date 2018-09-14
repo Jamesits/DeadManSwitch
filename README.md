@@ -8,6 +8,12 @@ Currently supported triggers:
 
 ## Installation
 
+There are precompiled binaries for Linux in the [releases](https://github.com/Jamesits/DeadManSwitch/releases) page.
+
+Requires:
+* Go 1.10 or later (only needed for compilation)
+* Linux or Windows (other OSes are not tested; on Windows you need to figure out how to install yourself)
+
 There is currently no formal package. A `install.sh` can be used to compile from source and install to your localhost, and a `package.sh` can be used to generate a binary tarball.
 
 ## Config
