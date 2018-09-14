@@ -18,7 +18,7 @@ The config file is self-explanatory.
 
 * Records are analyzed using substrings, so:
   * **DO NOT** use your domain or record type as a trigger
-  * **DO NOT** make the trigger string a substring of the normal string
+  * **DO NOT** make the trigger string a substring of the normal string, or vice versa
 * All relative paths in the config is relative to the config file itself. 
 * Programs will be executed in alphabet order. 
 * File deletion happens after program execution.
