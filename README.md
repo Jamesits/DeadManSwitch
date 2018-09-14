@@ -21,6 +21,7 @@ The config file is self-explanatory.
   * **DO NOT** make the trigger string a substring of the normal string
 * All relative paths in the config is relative to the config file itself. 
 * Programs will be executed in alphabet order. 
+* File deletion happens after program execution.
 
 ## Usage
 
