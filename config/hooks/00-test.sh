@@ -1,3 +1,5 @@
 #!/bin/bash
 
-echo "test"
+echo "test trigger"
+
+exit 0
