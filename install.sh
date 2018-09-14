@@ -15,7 +15,7 @@ make
 chmod +x dmswitch
 mkdir -p /usr/local/bin
 mv dmswitch /usr/local/bin
-rm -rf /tmp/go
+#rm -rf /tmp/go
 popd
 
 pushd config
