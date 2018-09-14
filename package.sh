@@ -14,6 +14,7 @@ chmod +x dmswitch
 popd
 
 mv src/dmswitch release
+cp install-dist.sh release/install.sh
 
 mkdir -p release/etc/dmswitch
 cp -r config/config.toml config/hooks release/etc/dmswitch
