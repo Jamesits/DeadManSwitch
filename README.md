@@ -1,6 +1,6 @@
 # Dead Man's Switch
 
-This little daemon watchs a DNS record periodically, if it contains a pre-defined value or is missing, trigger a set of actions.
+This little daemon watchs a DNS record periodically, if it contains a pre-defined value or is missing, triggers a set of actions.
 
 Currently supported triggers:
 * Execute programs or scripts
