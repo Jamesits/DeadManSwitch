@@ -32,5 +32,5 @@ check_interval = 60
 # quit main program after one successful trigger
 exit_after_trigger = true
 
-trigger_on_uncertain = true
+trigger_on_uncertain = false
 max_uncertain_tolerance = 3
