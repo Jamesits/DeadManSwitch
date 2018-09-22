@@ -3,6 +3,16 @@ set -eu
 
 export GOPATH=/tmp/go
 export GOBIN=$GOPATH/bin
+NOAUTOARCHIVE=0
+
+while test $# -gt 0
+do
+    case "$1" in
+        --noautoarchive) NOAUTOARCHIVE=1
+            ;;
+    esac
+    shift
+done
 
 rm -rf release
 mkdir -p release
@@ -23,7 +33,8 @@ mkdir -p release/etc/systemd/system
 cp config/dmswitch.service release/etc/systemd/system
 
 
-mv release dmswitch
-tar -cvzf dmswitch-release.tar.gz dmswitch
-rm -rf dmswitch
-
+if [ $NOAUTOARCHIVE = 0 ]; then
+    mv release dmswitch
+    tar -cvzf dmswitch-release.tar.gz dmswitch
+    rm -rf dmswitch
+fi
