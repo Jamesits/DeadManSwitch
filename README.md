@@ -2,6 +2,8 @@
 
 This little daemon watchs a DNS record periodically, if it contains a pre-defined value or is missing, triggers a set of actions.
 
+[![Build status](https://dev.azure.com/nekomimiswitch/General/_apis/build/status/DeadManSwitch)](https://dev.azure.com/nekomimiswitch/General/_build/latest?definitionId=1)
+
 Currently supported triggers:
 * Execute programs or scripts
 * Delete files
