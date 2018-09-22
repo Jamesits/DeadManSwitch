@@ -32,9 +32,9 @@ cp -r config/config.toml config/hooks release/etc/dmswitch
 mkdir -p release/etc/systemd/system
 cp config/dmswitch.service release/etc/systemd/system
 
+mv release dmswitch
 
 if [ $NOAUTOARCHIVE = 0 ]; then
-    mv release dmswitch
     tar -cvzf dmswitch-release.tar.gz dmswitch
     rm -rf dmswitch
 fi
