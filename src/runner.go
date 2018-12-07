@@ -1,77 +1,65 @@
 package main
 
 import (
-	"github.com/miekg/dns"
+	"context"
+	"errors"
 	"log"
+	"net"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"sort"
 	"strings"
-	"time"
 )
 
-func check(conf *config) uint8{
-	req := new(dns.Msg)
-	req.SetQuestion(dns.Fqdn(conf.Record), dns.StringToType[conf.RecordType])
-
-	client := new(dns.Client)
-	client.SingleInflight = true
-	resolvers := conf.CustomResolvers
+func check(conf *config) Triool {
+	var resolvers []*net.Resolver
 	if conf.TrySystemResolver {
-		_, err := os.Stat("/etc/resolv.conf")
-		if os.IsExist(err) {
-			cfg, err := dns.ClientConfigFromFile("/etc/resolv.conf")
-			if err != nil {
-				for _, elem := range cfg.Servers {
-					resolvers = append(resolvers, elem)
+		resolvers = append(resolvers, getResolver())
+	}
+	for _, elem := range conf.CustomResolvers {
+		resolvers = append(resolvers, getResolverWithServer(elem))
+	}
+
+	var checkResult = Uncertain
+	ctx := context.Background()
+	for _, resolver := range resolvers {
+		if checkResult != Uncertain {
+			break
+		}
+
+		var ret []string
+		var err error
+
+		switch strings.ToUpper(conf.RecordType) {
+		case "A", "AAAA":
+			ret, err = resolver.LookupAddr(ctx, conf.Record)
+		case "TXT":
+			ret, err = resolver.LookupTXT(ctx, conf.Record)
+		default:
+			err = errors.New("unsupported record type")
+		}
+
+		if err != nil {
+			log.Printf("Unable to resolve record: %s\n", err)
+		} else {
+			log.Println("Result entries:")
+			for _, elem := range ret {
+				log.Println(elem)
+				if strings.Contains(elem, conf.ExpectedValue) {
+					log.Println("Normal value matched")
+					checkResult = False
+				}
+				if strings.Contains(elem, conf.TriggerValue) {
+					// Something happened
+					log.Println("Trigger value matched")
+					checkResult = True
+					break
 				}
 			}
 		}
 	}
-
-	var in *dns.Msg
-	var rtt time.Duration
-	var err error
-	gotResult := false
-	for _, server := range resolvers {
-		in, rtt, err = client.Exchange(req, server)
-		log.Printf("Server: %s RTT: %s\n", server, rtt)
-
-		// unexpected result
-		if err != nil {
-			log.Printf("Unable to resolve record using %s\n", server)
-		} else {
-			gotResult = true
-			break
-		}
-	}
-	if !gotResult {
-		return Uncertain
-	}
-
-	expectedValueFound := false
-	log.Println("Result entries:")
-	for _, entry := range in.Answer {
-		entryString := entry.String()
-		log.Println(entry)
-		if strings.Contains(entryString, conf.ExpectedValue) {
-			// Yay we found the correct value
-			log.Println("Normal value matched")
-			expectedValueFound = true
-		}
-		if strings.Contains(entryString, conf.TriggerValue) {
-			// Something happened
-			log.Println("Trigger value matched")
-			return True
-		}
-	}
-
-	if expectedValueFound {
-		return False
-	} else {
-		return Uncertain
-	}
+	return checkResult
 }
 
 func runScriptIterative(path string) {
@@ -108,7 +96,7 @@ func delFileIterative(path string) {
 	// first we try a remove all method
 	err := os.RemoveAll(path)
 	// if unable to clean up, we remove as much as we can
-	if err == nil  {
+	if err == nil {
 		log.Printf("%s removed on first try\n", path)
 	} else {
 		file, err := os.Stat(path)

@@ -1,7 +1,9 @@
 package main
 
+type Triool uint8
+
 const (
-	False = iota
+	False Triool = iota
 	True
 	Uncertain
 )
