@@ -6,6 +6,7 @@ custom_resolvers = [
 
 # The DNS record to check
 record = "test.ds.jamesits.eu.org"
+# Record type: A, AAAA and TXT is supported
 record_type = "TXT"
 
 # A "normal" value
